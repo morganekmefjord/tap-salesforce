@@ -3,7 +3,7 @@ import logging
 import requests
 from collections import namedtuple
 from simple_salesforce import SalesforceLogin
-
+import os
 
 LOGGER = logging.getLogger(__name__)
 
@@ -79,8 +79,12 @@ class SalesforceAuthOAuth(SalesforceAuth):
     def _login_url(self):
         login_url = 'https://login.salesforce.com/services/oauth2/token'
 
+
         if self.is_sandbox:
             login_url = 'https://test.salesforce.com/services/oauth2/token'
+
+        if os.environ.get('SF_LOGIN_URL'):
+            login_url = os.environ.get('SF_LOGIN_URL')
 
         return login_url
 
