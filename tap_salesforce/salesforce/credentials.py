@@ -73,7 +73,7 @@ class SalesforceAuthOAuth(SalesforceAuth):
 
     @property
     def _login_body(self):
-        return {'grant_type': 'refresh_token', **self._credentials._asdict()}
+        return {'grant_type': 'client_credentials', **self._credentials._asdict()}
 
     @property
     def _login_url(self):
@@ -83,7 +83,7 @@ class SalesforceAuthOAuth(SalesforceAuth):
         if self.is_sandbox:
             login_url = 'https://test.salesforce.com/services/oauth2/token'
 
-        if os.environ.get('SF_LOGIN_URL'):
+        if os.environ.get('SF_LOGIN_URL', None):
             login_url = os.environ.get('SF_LOGIN_URL')
 
         return login_url
